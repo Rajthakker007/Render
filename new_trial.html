@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text on Images</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .outputContainer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .outputImage {
+            max-width: 100%;
+            max-height: 400px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 15px;
+            margin: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add Text to Images</h1>
+
+    <form id="imageForm" enctype="multipart/form-data" action="javascript:void(0);">
+        <h2>Image and Text Pairs</h2>
+        <div id="imagePairs">
+            <!-- Generate all 35 pairs with a loop -->
+            <script>
+                for (let i = 0; i < 1; i++) {
+                    document.write(`
+                        <input type="file" id="imageInput${i}" accept="image/*">
+                        <br>Text for Image :
+                        <textarea id="textInput${i}" rows="4" cols="50" placeholder="Enter text here"></textarea>
+                        <br>
+                    `);
+                }
+                for (let i = 0; i < 1; i++) {
+                    document.write(`Text for Audio :                        
+                        <textarea id="textInput${i}" rows="4" cols="50" placeholder="Enter text here"></textarea>
+                        <br>
+                    `);
+                }
+            </script>
+        </div>
+        <br>
+        <button id="submitBtn" type="submit">Add Text to Images</button>
+    </form>
+
+    <h2>Resulting Images</h2>
+    <div class="outputContainer" id="outputImages"></div>
+
+    <script>
+        function addTextToImage(imageInputId, textInputId) {
+            const imageInput = document.getElementById(imageInputId);
+            const textInput = document.getElementById(textInputId).value;
+
+            if (imageInput.files && imageInput.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const outputImage = document.createElement('div');
+                    outputImage.className = 'outputImage';
+                    
+                    const outputWindow = window.open('', '_blank');
+                    outputWindow.document.write('<html><body>');
+                    
+                    const textStyles = 'max-width: 100%; max-height: 400px; background: transparent; padding: 15px; font-family: Arial, sans-serif; text-align: left; font-size: 30px; white-space: pre-line;';
+                    outputWindow.document.write('<span style="' + textStyles + '">' + textInput + '</span>');
+                    
+                    outputWindow.document.write('</body></html>');
+                    outputWindow.document.close();
+                    
+                    outputWindow.document.body.style.backgroundImage = 'url(' + e.target.result + ')';
+                    outputWindow.document.body.style.backgroundSize = 'cover';
+                    outputWindow.document.body.style.backgroundPosition = 'center';
+                    outputWindow.document.body.style.backgroundRepeat = 'no-repeat';
+                    
+                    const outputImages = document.getElementById('outputImages');
+                    outputImages.appendChild(outputImage);
+                };
+
+                reader.readAsDataURL(imageInput.files[0]);
+            }
+        }
+
+        document.getElementById('imageForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            for (let i = 0; i < 1; i++) {
+                const imageInputId = `imageInput${i}`;
+                const textInputId = `textInput${i}`;
+                addTextToImage(imageInputId, textInputId);
+            }
+        });
+    </script>
+</body>
+</html>
