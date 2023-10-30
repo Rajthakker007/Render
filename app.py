@@ -84,7 +84,7 @@ def process():
         image1 = ImageClip(image_with_text_path).set_duration(10)
 
         # Generate video
-        video = CompositeVideoClip([image1.set_duration(speech1.duration).set_audio(speech1)]).fx(vfx.speedx, 1.2)
+        video = CompositeVideoClip([image1.set_duration(speech1.duration+0.05).set_audio(speech1)]).fx(vfx.speedx, 1.1)
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")  # Add timestamp
         video_file_name = f"video{i}_{timestamp}.mp4"  # Add timestamp to the file name
         video_path = os.path.join(temp_dir, video_file_name)
@@ -125,7 +125,7 @@ def add_text_to_image(image_path, text, image_number):
     image = Image.open(image_path)
     draw = ImageDraw.Draw(image)
     font_size = 50
-    font = ImageFont.truetype("arial.ttf", font_size) # You can customize the font
+    font = ImageFont.truetype("liberation-sans-italic.ttf", font_size) # You can customize the font
     position = (10, 10)
     color = (0, 0, 0)  # black color
     draw.text(position, text, fill=color, font=font)
