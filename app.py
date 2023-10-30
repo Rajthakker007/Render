@@ -5,7 +5,7 @@ import threading
 from PIL import Image, ImageDraw, ImageFont
 import os
 import gtts 
-
+import time
 
 app = Flask(__name__)
 
