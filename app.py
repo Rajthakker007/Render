@@ -84,7 +84,7 @@ def process():
         image1 = ImageClip(image_with_text_path).set_duration(10)
 
         # Generate video
-        video = CompositeVideoClip([image1.set_duration(speech1.duration+0.05).set_audio(speech1)]).fx(vfx.speedx, 1.1)
+        video = CompositeVideoClip([image1.set_duration(speech1.duration+0.07).set_audio(speech1)]).fx(vfx.speedx, 1.1)
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")  # Add timestamp
         video_file_name = f"video{i}_{timestamp}.mp4"  # Add timestamp to the file name
         video_path = os.path.join(temp_dir, video_file_name)
